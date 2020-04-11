@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Swisschain.Extensions.Idempotency.Outbox
+namespace Swisschain.Extensions.Idempotency
 {
     public sealed class Outbox
     {
         private readonly List<object> _commands = new List<object>();
         private readonly List<object> _events = new List<object>();
 
-        private Outbox(string requestId, long aggregateId, bool isStored, bool isShipped)
+        private Outbox(string requestId, long aggregateId, bool isStored, bool isDispatched)
         {
             RequestId = requestId;
             AggregateId = aggregateId;
             IsStored = isStored;
-            IsShipped = isShipped;
+            IsDispatched = isDispatched;
         }
 
         public string RequestId { get; }
         public long AggregateId { get; }
         public bool IsStored { get; }
-        public bool IsShipped { get; }
+        public bool IsDispatched { get; }
         public object Response { get; private set; }
         public IReadOnlyCollection<object> Commands => new ReadOnlyCollection<object>(_commands);
         public IReadOnlyCollection<object> Events => new ReadOnlyCollection<object>(_events);

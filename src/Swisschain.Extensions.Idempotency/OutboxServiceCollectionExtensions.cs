@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Swisschain.Extensions.Idempotency.Outbox
+namespace Swisschain.Extensions.Idempotency
 {
     public static class OutboxServiceCollectionExtensions
     {

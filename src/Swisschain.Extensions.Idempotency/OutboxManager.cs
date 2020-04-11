@@ -27,7 +27,7 @@ namespace Swisschain.Extensions.Idempotency.Outbox
 
         public async Task EnsureDispatched(Outbox outbox)
         {
-            if (outbox.IsShipped)
+            if (outbox.IsDispatched)
             {
                 return;
             }
@@ -47,7 +47,7 @@ namespace Swisschain.Extensions.Idempotency.Outbox
 
         public async Task EnsureDispatched(Outbox outbox, IOutboxDispatcher dispatcher)
         {
-            if (outbox.IsShipped)
+            if (outbox.IsDispatched)
             {
                 return;
             }

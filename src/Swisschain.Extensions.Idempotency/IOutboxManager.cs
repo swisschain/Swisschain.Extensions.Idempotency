@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Swisschain.Extensions.Idempotency.Outbox
+namespace Swisschain.Extensions.Idempotency
 {
     public interface IOutboxManager
     {
