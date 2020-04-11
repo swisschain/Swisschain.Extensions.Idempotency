@@ -20,6 +20,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release
     - name: Pack
-      run: dotnet pack --no-build --include-symbols --include-source --configuration Release src/Swisschain.Extension.Idemptency /p:Version=${GITHUB_REF#refs/tags/}
+      run: dotnet pack --no-build --include-symbols --include-source --configuration Release src/Swisschain.Extensions.Idempotency /p:Version=${GITHUB_REF#refs/tags/}
     - name: Publish
-      run: dotnet nuget push src/Swisschain.Extension.Idemptency/bin/Release/*.nupkg -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_TOCKEN }}
+      run: dotnet nuget push src/Swisschain.Extensions.Idempotency/bin/Release/*.nupkg -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_TOCKEN }}
