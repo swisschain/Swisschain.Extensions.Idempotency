@@ -1,4 +1,4 @@
-﻿namespace Swisschain.Extensions.Idempotency.Outbox
+﻿namespace Swisschain.Extensions.Idempotency
 {
     public enum OutboxPersistingReason
     {
