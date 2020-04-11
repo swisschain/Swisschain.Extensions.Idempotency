@@ -63,12 +63,12 @@ namespace Swisschain.Extensions.Idempotency
         public static Outbox Restore(string requestId,
             long aggregateId,
             bool isStored,
-            bool isShipped,
+            bool isDispatched,
             object response,
             IEnumerable<object> commands,
             IEnumerable<object> events)
         {
-            var instance = new Outbox(requestId, aggregateId, isStored, isShipped)
+            var instance = new Outbox(requestId, aggregateId, isStored, isDispatched)
             {
                 Response = response
             };

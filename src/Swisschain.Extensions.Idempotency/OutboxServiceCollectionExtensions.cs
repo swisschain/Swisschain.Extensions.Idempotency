@@ -9,15 +9,14 @@ namespace Swisschain.Extensions.Idempotency
         {
             services.AddTransient<IOutboxManager, OutboxManager>();
 
+            services.AddTransient<IOutboxDispatcher, DefaultOutboxDispatcher>();
+            services.AddTransient<IOutboxRepository, DefaultOutboxRepository>();
+
             if (config != null)
             {
                 var configBuilder = new OutboxConfigurationBuilder(services);
 
                 config.Invoke(configBuilder);
-            }
-            else
-            {
-
             }
 
             return services;

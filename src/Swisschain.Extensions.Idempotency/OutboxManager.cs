@@ -15,9 +15,14 @@ namespace Swisschain.Extensions.Idempotency
             _repository = repository;
         }
 
-        public async Task<Outbox> Open(string requestId, Func<Task<long>> aggregateIdFactory)
+        public Task<Outbox> Open(string requestId, Func<Task<long>> aggregateIdFactory)
         {
-            return await _repository.Open(requestId, aggregateIdFactory);
+            return _repository.Open(requestId, aggregateIdFactory);
+        }
+
+        public Task<Outbox> Open(string requestId)
+        {
+            return _repository.Open(requestId);
         }
 
         public async Task Store(Outbox outbox)

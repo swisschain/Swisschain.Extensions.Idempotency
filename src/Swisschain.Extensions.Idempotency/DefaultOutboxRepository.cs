@@ -10,6 +10,11 @@ namespace Swisschain.Extensions.Idempotency
             throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
         }
 
+        public Task<Outbox> Open(string requestId)
+        {
+            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
+        }
+
         public Task Save(Outbox outbox, OutboxPersistingReason reason)
         {
             throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
