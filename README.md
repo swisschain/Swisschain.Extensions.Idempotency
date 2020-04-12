@@ -5,7 +5,7 @@ Extensions to provide idempotency in the services
 
 `Install-Package swisschain.extensions.idempotency`
 
-Additional packages are required to use the Outbox dispatching and persistance.
+Additional packages are required to use the Outbox dispatching and persistance. Please read their documentation as well.
 
 ### Dispatching packages
 
@@ -15,8 +15,9 @@ Additional packages are required to use the Outbox dispatching and persistance.
 
 - [EfCore](https://github.com/swisschain/Swisschain.Extensions.Idempotency.EfCore)
 
-## Initialization:
+## Initialization
 
+Add `AddOutbox` to your DI container initialization:
 
 ```c#
 services.AddOutbox(c =>
@@ -113,4 +114,4 @@ public class TransfersService
 There are predefined aggregate ID generators:
 
 - `OutboxAggregateIdGenerator.None` - no ID will be generated, thus aggregate ID of -1 will be used
-- `OutboxAggregateIdGenerator.Sequential` - shared (within DB context) sequential ID will generated using DB sequence.
+- `OutboxAggregateIdGenerator.Sequential` - shared (within DB context) sequential ID will be generated using DB sequence.
