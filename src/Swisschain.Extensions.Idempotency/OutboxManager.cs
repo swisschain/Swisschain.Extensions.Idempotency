@@ -28,6 +28,8 @@ namespace Swisschain.Extensions.Idempotency
         public async Task Store(Outbox outbox)
         {
             await _repository.Save(outbox, OutboxPersistingReason.Storing);
+
+            outbox.IsStored = true;
         }
 
         public async Task EnsureDispatched(Outbox outbox)
@@ -48,6 +50,8 @@ namespace Swisschain.Extensions.Idempotency
             }
 
             await _repository.Save(outbox, OutboxPersistingReason.Dispatching);
+
+            outbox.IsDispatched = true;
         }
 
         public async Task EnsureDispatched(Outbox outbox, IOutboxDispatcher dispatcher)
@@ -68,6 +72,8 @@ namespace Swisschain.Extensions.Idempotency
             }
 
             await _repository.Save(outbox, OutboxPersistingReason.Dispatching);
+
+            outbox.IsDispatched = true;
         }
     }
 }

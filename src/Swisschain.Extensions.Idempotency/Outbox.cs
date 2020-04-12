@@ -19,8 +19,8 @@ namespace Swisschain.Extensions.Idempotency
 
         public string RequestId { get; }
         public long AggregateId { get; }
-        public bool IsStored { get; }
-        public bool IsDispatched { get; }
+        public bool IsStored { get; internal set; }
+        public bool IsDispatched { get; internal set; }
         public object Response { get; private set; }
         public IReadOnlyCollection<object> Commands => new ReadOnlyCollection<object>(_commands);
         public IReadOnlyCollection<object> Events => new ReadOnlyCollection<object>(_events);
