@@ -61,7 +61,7 @@ public class TransfersService
 
     public async Task<ExecuteTransferResponse> Execute(ExecuteTransferRequest request)
     {
-        // Open the outbox, providing unique idempotency request ID and optionally factory of the aggregate ID which is created by this method.
+        // Open the outbox, providing unique idempotency request ID and factory of the aggregate ID which is created by this method.
         var outbox = await _outbox.Open($"Transfers_Execute_{request.RequestId}", () => _transfersRepository.GetIdAsync());
         
         // Check if the outbox wasn't stored yet
@@ -107,3 +107,10 @@ public class TransfersService
 }
 
 ```
+
+### Aggregate ID generators
+
+There are predefined aggregate ID generators:
+
+- `OutboxAggregateIdGenerator.None` - no ID will be generated, thus aggregate ID of 0 will be used
+- `OutboxAggregateIdGenerator.Sequential` - shared (within DB context) sequential ID will generated using DB sequence.

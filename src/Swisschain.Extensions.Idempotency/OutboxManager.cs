@@ -22,7 +22,7 @@ namespace Swisschain.Extensions.Idempotency
 
         public Task<Outbox> Open(string requestId)
         {
-            return _repository.Open(requestId);
+            return _repository.Open(requestId, OutboxAggregateIdGenerator.None);
         }
 
         public async Task Store(Outbox outbox)

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swisschain.Extensions.Idempotency", "src\Swisschain.Extensions.Idempotency\Swisschain.Extensions.Idempotency.csproj", "{56FA2744-BE57-4CD0-9CCD-513D6C9FB6B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swisschain.Extensions.Idempotency", "src\Swisschain.Extensions.Idempotency\Swisschain.Extensions.Idempotency.csproj", "{56FA2744-BE57-4CD0-9CCD-513D6C9FB6B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "tests\Tests\Tests.csproj", "{5D6A6FDA-15E4-4225-995E-F82258D576C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{56FA2744-BE57-4CD0-9CCD-513D6C9FB6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56FA2744-BE57-4CD0-9CCD-513D6C9FB6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56FA2744-BE57-4CD0-9CCD-513D6C9FB6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6A6FDA-15E4-4225-995E-F82258D576C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6A6FDA-15E4-4225-995E-F82258D576C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6A6FDA-15E4-4225-995E-F82258D576C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6A6FDA-15E4-4225-995E-F82258D576C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
