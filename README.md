@@ -112,5 +112,5 @@ public class TransfersService
 
 There are predefined aggregate ID generators:
 
-- `OutboxAggregateIdGenerator.None` - no ID will be generated, thus aggregate ID of 0 will be used
+- `OutboxAggregateIdGenerator.None` - no ID will be generated, thus aggregate ID of -1 will be used
 - `OutboxAggregateIdGenerator.Sequential` - shared (within DB context) sequential ID will generated using DB sequence.
