@@ -63,7 +63,7 @@ public class TransfersService
     public async Task<ExecuteTransferResponse> Execute(ExecuteTransferRequest request)
     {
         // Open the outbox, providing unique idempotency request ID and factory of the aggregate ID which is created by this method.
-        var outbox = await _outbox.Open($"Transfers_Execute_{request.RequestId}", () => _transfersRepository.GetIdAsync());
+        var outbox = await _outbox.Open($"API:Transfers.Execute:{request.RequestId}", () => _transfersRepository.GetIdAsync());
         
         // Check if the outbox wasn't stored yet
         if (!outbox.IsStored)
