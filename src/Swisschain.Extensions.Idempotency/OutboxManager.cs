@@ -14,11 +14,12 @@ namespace Swisschain.Extensions.Idempotency
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public Task<Outbox> Open(string idempotencyId)
+        public async Task<Outbox> Open(string idempotencyId)
         {
             var unitOfWork = _unitOfWorkFactory.Create();
+            var existingOutbox = await unitOfWork.Outbox.GetOrDefault(unitOfWork, _dispatcher, idempotencyId);
 
-            return unitOfWork.Outbox.Open(unitOfWork, _dispatcher, idempotencyId);
+            return existingOutbox ?? Outbox.Open(unitOfWork, _dispatcher, idempotencyId);
         }
     }
 }

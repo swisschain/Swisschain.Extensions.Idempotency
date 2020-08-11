@@ -130,6 +130,17 @@ namespace Swisschain.Extensions.Idempotency
             _events.Add(evt);
         }
 
+        public static Outbox Open(IUnitOfWork unitOfWork,
+            IOutboxDispatcher dispatcher,
+            string idempotencyId)
+        {
+            return new Outbox(unitOfWork,
+                dispatcher,
+                idempotencyId,
+                isClosed: false,
+                isDispatched: false);
+        }
+
         public static Outbox Restore(IUnitOfWork unitOfWork,
             IOutboxDispatcher dispatcher,
             string idempotencyId,
