@@ -1,20 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Swisschain.Extensions.Idempotency
 {
     public interface IIdGenerator
     {
         /// <summary>
-        /// Generates new ID for the given <paramref name="idempotencyId"/> or
-        /// returns existing ID if any, using provided <paramref name="idFactory"/>
+        /// Generates new ID using the specified <paramref name="generatorName"/> for the given
+        /// <paramref name="idempotencyId"/> or returns existing ID if any.
         /// </summary>
-        Task<long> GetId(string idempotencyId, Func<Task<long>> idFactory);
-
-        /// <summary>
-        /// Generates new ID for the given <paramref name="idempotencyId"/> or
-        /// returns existing ID if any, using built-in sequence.
-        /// </summary>
-        Task<long> GetId(string idempotencyId);
+        Task<long> GetId(string idempotencyId, string generatorName);
     }
 }
