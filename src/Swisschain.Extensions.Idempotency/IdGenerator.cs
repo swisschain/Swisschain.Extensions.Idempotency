@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Swisschain.Extensions.Idempotency
 {
@@ -12,14 +11,9 @@ namespace Swisschain.Extensions.Idempotency
             _repository = repository;
         }
         
-        public Task<long> GetId(string idempotencyId, Func<Task<long>> idFactory)
+        public Task<long> GetId(string idempotencyId, string generatorName)
         {
-            return _repository.GetId(idempotencyId, idFactory);
-        }
-
-        public Task<long> GetId(string idempotencyId)
-        {
-            return GetId(idempotencyId, IdFactory.Sequential);
+            return _repository.GetId(idempotencyId, generatorName);
         }
     }
 }
