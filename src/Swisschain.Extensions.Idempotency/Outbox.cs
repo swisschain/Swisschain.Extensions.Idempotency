@@ -144,13 +144,12 @@ namespace Swisschain.Extensions.Idempotency
         public static Outbox Restore(IUnitOfWork unitOfWork,
             IOutboxDispatcher dispatcher,
             string idempotencyId,
-            bool isClosed,
             bool isDispatched,
             object response,
             IEnumerable<object> commands,
             IEnumerable<object> events)
         {
-            var instance = new Outbox(unitOfWork, dispatcher, idempotencyId, isClosed, isDispatched)
+            var instance = new Outbox(unitOfWork, dispatcher, idempotencyId, isClosed: true, isDispatched)
             {
                 Response = response
             };
