@@ -5,6 +5,7 @@ namespace Swisschain.Extensions.Idempotency
     public interface IOutboxRepository
     {
         Task<Outbox> GetOrDefault(IUnitOfWork unitOfWork, IOutboxDispatcher dispatcher, string idempotencyId);
-        Task Save(Outbox outbox);
+        Task Add(Outbox outbox);
+        Task Update(Outbox outbox);
     }
 }

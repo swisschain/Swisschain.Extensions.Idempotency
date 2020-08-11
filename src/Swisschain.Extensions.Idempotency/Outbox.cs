@@ -54,7 +54,7 @@ namespace Swisschain.Extensions.Idempotency
 
             IsClosed = true;
 
-            _unitOfWork.Outbox.Save(this);
+            _unitOfWork.Outbox.Add(this);
             _unitOfWork.Commit();
         }
 
@@ -92,7 +92,7 @@ namespace Swisschain.Extensions.Idempotency
 
             IsDispatched = true;
 
-            await _unitOfWork.Outbox.Save(this);
+            await _unitOfWork.Outbox.Update(this);
         }
 
         public void Return<TResponse>(TResponse response)
