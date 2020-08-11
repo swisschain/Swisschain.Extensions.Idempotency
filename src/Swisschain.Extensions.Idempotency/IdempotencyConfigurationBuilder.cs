@@ -2,9 +2,9 @@
 
 namespace Swisschain.Extensions.Idempotency
 {
-    public sealed class OutboxConfigurationBuilder
+    public sealed class IdempotencyConfigurationBuilder
     {
-        internal OutboxConfigurationBuilder(IServiceCollection services)
+        internal IdempotencyConfigurationBuilder(IServiceCollection services)
         {
             Services = services;
         }

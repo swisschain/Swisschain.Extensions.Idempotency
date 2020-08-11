@@ -5,19 +5,14 @@ namespace Swisschain.Extensions.Idempotency
 {
     internal sealed class DefaultOutboxRepository : IOutboxRepository 
     {
-        public Task<Outbox> Open(string requestId, Func<Task<long>> aggregateIdFactory)
+        public Task<Outbox> Open(IUnitOfWork unitOfWork, IOutboxDispatcher dispatcher, string idempotencyId)
         {
-            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
+            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure a persistence in service.AddIdempotency(c => {...})");
         }
 
-        public Task<Outbox> Open(string requestId)
+        public Task Save(Outbox outbox)
         {
-            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
-        }
-
-        public Task Save(Outbox outbox, OutboxPersistingReason reason)
-        {
-            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure repository in service.AddOutbox(c => {...})");
+            throw new InvalidOperationException("Outbox repository is not configured. To use outbox, you need to configure a persistence in service.AddIdempotency(c => {...})");
         }
     }
 }

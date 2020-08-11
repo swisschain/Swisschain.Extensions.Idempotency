@@ -1,79 +1,24 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Swisschain.Extensions.Idempotency
 {
     internal sealed class OutboxManager : IOutboxManager
     {
         private readonly IOutboxDispatcher _dispatcher;
-        private readonly IOutboxRepository _repository;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public OutboxManager(IOutboxDispatcher dispatcher,
-            IOutboxRepository repository)
+        public OutboxManager(IOutboxDispatcher dispatcher, 
+            IUnitOfWorkFactory unitOfWorkFactory)
         {
             _dispatcher = dispatcher;
-            _repository = repository;
+            _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public Task<Outbox> Open(string requestId, Func<Task<long>> aggregateIdFactory)
+        public Task<Outbox> Open(string idempotencyId)
         {
-            return _repository.Open(requestId, aggregateIdFactory);
-        }
+            var unitOfWork = _unitOfWorkFactory.Create();
 
-        public Task<Outbox> Open(string requestId)
-        {
-            return _repository.Open(requestId, OutboxAggregateIdGenerator.None);
-        }
-
-        public async Task Store(Outbox outbox)
-        {
-            await _repository.Save(outbox, OutboxPersistingReason.Storing);
-
-            outbox.IsStored = true;
-        }
-
-        public async Task EnsureDispatched(Outbox outbox)
-        {
-            if (outbox.IsDispatched)
-            {
-                return;
-            }
-
-            foreach (var command in outbox.Commands)
-            {
-                await _dispatcher.Send(command);
-            }
-
-            foreach (var evt in outbox.Events)
-            {
-                await _dispatcher.Publish(evt);
-            }
-
-            await _repository.Save(outbox, OutboxPersistingReason.Dispatching);
-
-            outbox.IsDispatched = true;
-        }
-
-        public async Task EnsureDispatched(Outbox outbox, IOutboxDispatcher dispatcher)
-        {
-            if (outbox.IsDispatched)
-            {
-                return;
-            }
-
-            foreach (var command in outbox.Commands)
-            {
-                await dispatcher.Send(command);
-            }
-
-            foreach (var evt in outbox.Events)
-            {
-                await dispatcher.Publish(evt);
-            }
-
-            await _repository.Save(outbox, OutboxPersistingReason.Dispatching);
-
-            outbox.IsDispatched = true;
+            return unitOfWork.Outbox.Open(unitOfWork, _dispatcher, idempotencyId);
         }
     }
 }

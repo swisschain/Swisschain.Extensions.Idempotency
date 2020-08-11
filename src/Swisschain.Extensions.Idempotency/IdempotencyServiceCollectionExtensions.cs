@@ -3,18 +3,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Swisschain.Extensions.Idempotency
 {
-    public static class OutboxServiceCollectionExtensions
+    public static class IdempotencyServiceCollectionExtensions
     {
-        public static IServiceCollection AddOutbox(this IServiceCollection services, Action<OutboxConfigurationBuilder> config)
+        /// <summary>
+        /// 
+        /// </summary>
+        public static IServiceCollection AddIdempotency(this IServiceCollection services, Action<IdempotencyConfigurationBuilder> config)
         {
             services.AddTransient<IOutboxManager, OutboxManager>();
+            services.AddTransient<IIdGenerator, IdGenerator>();
 
             services.AddTransient<IOutboxDispatcher, DefaultOutboxDispatcher>();
             services.AddTransient<IOutboxRepository, DefaultOutboxRepository>();
+            services.AddTransient<IIdGeneratorRepository, DefaultIdGeneratorRepository>();
 
             if (config != null)
             {
-                var configBuilder = new OutboxConfigurationBuilder(services);
+                var configBuilder = new IdempotencyConfigurationBuilder(services);
 
                 config.Invoke(configBuilder);
             }

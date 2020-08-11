@@ -7,12 +7,12 @@ namespace Swisschain.Extensions.Idempotency
     {
         public Task Send(object command)
         {
-            throw new InvalidOperationException("Outbox dispatcher is not configured. To use dispatching, you can configure it in service.AddOutbox(c => {...})");
+            throw new InvalidOperationException("Outbox dispatcher is not configured. To use dispatching, you can configure messaging in service.AddIdempotency(c => {...})");
         }
 
         public Task Publish(object evt)
         {
-            throw new InvalidOperationException("Outbox dispatcher is not configured. To use dispatching, you can configure it in service.AddOutbox(c => {...})");
+            throw new InvalidOperationException("Outbox dispatcher is not configured. To use dispatching, you can configure messaging in service.AddIdempotency(c => {...})");
         }
     }
 }
