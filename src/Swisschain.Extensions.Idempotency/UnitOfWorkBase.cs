@@ -22,8 +22,7 @@ namespace Swisschain.Extensions.Idempotency
         protected abstract Task RollbackImpl();
         protected abstract ValueTask DisposeAsync(bool disposing);
 
-        public Task Init(IIdGeneratorRepository idGeneratorRepository,
-            IOutboxWriteRepository outboxWriteRepository,
+        public Task Init(IOutboxWriteRepository outboxWriteRepository,
             string idempotencyId,
             Outbox outbox)
         {

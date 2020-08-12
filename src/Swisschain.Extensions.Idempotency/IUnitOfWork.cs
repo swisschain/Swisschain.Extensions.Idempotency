@@ -11,8 +11,7 @@ namespace Swisschain.Extensions.Idempotency
         bool IsRolledBack { get; }
         Outbox Outbox { get; }
 
-        Task Init(IIdGeneratorRepository idGeneratorRepository,
-            IOutboxWriteRepository outboxWriteRepository,
+        Task Init(IOutboxWriteRepository outboxWriteRepository,
             string idempotencyId,
             Outbox outbox);
 
