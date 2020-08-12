@@ -13,7 +13,6 @@ namespace Swisschain.Extensions.Idempotency
         }
 
         public IOutboxWriteRepository OutboxWriteRepository { get; private set; }
-        public string IdempotencyId { get; private set; }
         public bool IsCommitted { get; private set; }
         public bool IsRolledBack { get; private set; }
         public Outbox Outbox { get; private set; }
@@ -23,11 +22,9 @@ namespace Swisschain.Extensions.Idempotency
         protected abstract ValueTask DisposeAsync(bool disposing);
 
         public Task Init(IOutboxWriteRepository outboxWriteRepository,
-            string idempotencyId,
             Outbox outbox)
         {
             OutboxWriteRepository = outboxWriteRepository;
-            IdempotencyId = idempotencyId;
             Outbox = outbox;
 
             return Task.CompletedTask;

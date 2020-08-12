@@ -6,14 +6,11 @@ namespace Swisschain.Extensions.Idempotency
     public interface IUnitOfWork : IAsyncDisposable
     {
         IOutboxWriteRepository OutboxWriteRepository { get; }
-        string IdempotencyId { get; }
         bool IsCommitted { get; }
         bool IsRolledBack { get; }
         Outbox Outbox { get; }
 
-        Task Init(IOutboxWriteRepository outboxWriteRepository,
-            string idempotencyId,
-            Outbox outbox);
+        Task Init(IOutboxWriteRepository outboxWriteRepository, Outbox outbox);
 
         /// <summary>
         /// Closes the <see cref="Outbox"/> and commits unit of work transaction

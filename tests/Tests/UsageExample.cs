@@ -21,7 +21,7 @@ namespace Tests
 
             if (!unitOfWork.Outbox.IsClosed)
             {
-                var id = await _idGenerator.GetId(unitOfWork.IdempotencyId, "id-generator-account");
+                var id = await _idGenerator.GetId(unitOfWork.Outbox.IdempotencyId, "id-generator-account");
 
                 // DB state updated here
 
