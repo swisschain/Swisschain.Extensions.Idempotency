@@ -7,30 +7,34 @@ namespace Swisschain.Extensions.Idempotency
     {
         private readonly IOutboxDispatcher _defaultOutboxDispatcher;
 
-        public UnitOfWorkBase(
-            IOutboxWriteRepository outboxWriteRepository,
-            IIdGeneratorRepository idGeneratorRepository,
-            string idempotencyId,
-            Outbox outbox,
-            IOutboxDispatcher defaultOutboxDispatcher)
+        public UnitOfWorkBase(IOutboxDispatcher defaultOutboxDispatcher)
         {
             _defaultOutboxDispatcher = defaultOutboxDispatcher;
-            OutboxWriteRepository = outboxWriteRepository;
-            IdGeneratorRepository = idGeneratorRepository;
-            IdempotencyId = idempotencyId;
-            Outbox = outbox;
         }
 
-        public IIdGeneratorRepository IdGeneratorRepository { get; }
-        public IOutboxWriteRepository OutboxWriteRepository { get; }
-        public string IdempotencyId { get; }
+        public IIdGeneratorRepository IdGeneratorRepository { get; private set; }
+        public IOutboxWriteRepository OutboxWriteRepository { get; private set; }
+        public string IdempotencyId { get; private set; }
         public bool IsCommitted { get; private set; }
         public bool IsRolledBack { get; private set; }
-        public Outbox Outbox { get; }
+        public Outbox Outbox { get; private set; }
 
         protected abstract Task CommitImpl();
         protected abstract Task RollbackImpl();
         protected abstract ValueTask DisposeAsync(bool disposing);
+
+        public Task Init(IIdGeneratorRepository idGeneratorRepository,
+            IOutboxWriteRepository outboxWriteRepository,
+            string idempotencyId,
+            Outbox outbox)
+        {
+            OutboxWriteRepository = outboxWriteRepository;
+            IdGeneratorRepository = idGeneratorRepository;
+            IdempotencyId = idempotencyId;
+            Outbox = outbox;
+
+            return Task.CompletedTask;
+        }
 
         public async Task Commit()
         {

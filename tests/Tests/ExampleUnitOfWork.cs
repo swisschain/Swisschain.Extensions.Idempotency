@@ -5,17 +5,8 @@ namespace Tests
 {
     public class ExampleUnitOfWork : UnitOfWorkBase
     {
-        public ExampleUnitOfWork(IOutboxWriteRepository outboxWriteRepository,
-            IIdGeneratorRepository idGeneratorRepository,
-            string idempotencyId,
-            Outbox outbox,
-            IOutboxDispatcher defaultOutboxDispatcher) : 
-
-            base(outboxWriteRepository, 
-                idGeneratorRepository, 
-                idempotencyId,
-                outbox,
-                defaultOutboxDispatcher)
+        public ExampleUnitOfWork(IOutboxDispatcher defaultOutboxDispatcher) :
+            base(defaultOutboxDispatcher)
         {
         }
 

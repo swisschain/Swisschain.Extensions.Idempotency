@@ -11,7 +11,12 @@ namespace Swisschain.Extensions.Idempotency
         bool IsCommitted { get; }
         bool IsRolledBack { get; }
         Outbox Outbox { get; }
-        
+
+        Task Init(IIdGeneratorRepository idGeneratorRepository,
+            IOutboxWriteRepository outboxWriteRepository,
+            string idempotencyId,
+            Outbox outbox);
+
         /// <summary>
         /// Closes the <see cref="Outbox"/> and commits unit of work transaction
         /// </summary>
