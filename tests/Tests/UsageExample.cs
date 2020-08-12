@@ -6,10 +6,13 @@ namespace Tests
     public class UsageExample
     {
         private readonly IUnitOfWorkManager<ExampleUnitOfWork> _unitOfWorkManager;
+        private readonly IIdGenerator _idGenerator;
 
-        public UsageExample(IUnitOfWorkManager<ExampleUnitOfWork> unitOfWorkManager)
+        public UsageExample(IUnitOfWorkManager<ExampleUnitOfWork> unitOfWorkManager,
+            IIdGenerator idGenerator)
         {
             _unitOfWorkManager = unitOfWorkManager;
+            _idGenerator = idGenerator;
         }
 
         public async Task Foo()
@@ -18,7 +21,7 @@ namespace Tests
 
             if (!unitOfWork.Outbox.IsClosed)
             {
-                var id = await unitOfWork.GenerateId("id-generator-account");
+                var id = await _idGenerator.GetId(unitOfWork.IdempotencyId, "id-generator-account");
 
                 // DB state updated here
 
