@@ -2,9 +2,11 @@
 
 namespace Swisschain.Extensions.Idempotency
 {
-    public interface IOutboxRepository
+    /// <summary>
+    /// Should work in the context of the <see cref="IUnitOfWork"/> transaction
+    /// </summary>
+    public interface IOutboxWriteRepository
     {
-        Task<Outbox> GetOrDefault(IUnitOfWork unitOfWork, IOutboxDispatcher dispatcher, string idempotencyId);
         Task Add(Outbox outbox);
         Task Update(Outbox outbox);
     }

@@ -4,22 +4,18 @@ namespace Swisschain.Extensions.Idempotency
 {
     internal sealed class OutboxManager : IOutboxManager
     {
-        private readonly IOutboxDispatcher _dispatcher;
-        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        private readonly IOutboxReadRepository _repository;
 
-        public OutboxManager(IOutboxDispatcher dispatcher, 
-            IUnitOfWorkFactory unitOfWorkFactory)
+        public OutboxManager(IOutboxReadRepository repository)
         {
-            _dispatcher = dispatcher;
-            _unitOfWorkFactory = unitOfWorkFactory;
+            _repository = repository;
         }
 
         public async Task<Outbox> Open(string idempotencyId)
         {
-            var unitOfWork = _unitOfWorkFactory.Create();
-            var existingOutbox = await unitOfWork.Outbox.GetOrDefault(unitOfWork, _dispatcher, idempotencyId);
+            var existingOutbox = await _repository.GetOrDefault(idempotencyId);
 
-            return existingOutbox ?? Outbox.Open(unitOfWork, _dispatcher, idempotencyId);
+            return existingOutbox ?? Outbox.Open(idempotencyId);
         }
     }
 }

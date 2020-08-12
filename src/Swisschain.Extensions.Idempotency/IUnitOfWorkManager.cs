@@ -2,9 +2,9 @@
 
 namespace Swisschain.Extensions.Idempotency
 {
-    public interface IUnitOfWorkFactory<TUnitOfWork>
+    public interface IUnitOfWorkManager<TUnitOfWork> 
         where TUnitOfWork : UnitOfWorkBase
     {
-        Task<TUnitOfWork> Create(Outbox outbox);
+        Task<TUnitOfWork> Begin(string idempotencyId);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Swisschain.Extensions.Idempotency
 {
-    public interface IOutboxManager
+    internal interface IOutboxManager
     {
         Task<Outbox> Open(string idempotencyId);
     }
