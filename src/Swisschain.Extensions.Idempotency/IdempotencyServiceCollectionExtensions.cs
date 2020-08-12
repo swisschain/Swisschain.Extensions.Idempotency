@@ -11,9 +11,11 @@ namespace Swisschain.Extensions.Idempotency
         public static IServiceCollection AddIdempotency(this IServiceCollection services, Action<IdempotencyConfigurationBuilder> config)
         {
             services.AddTransient<IOutboxManager, OutboxManager>();
+            services.AddTransient<IIdGenerator, IdGenerator>();
 
             services.AddTransient<IOutboxDispatcher, DefaultOutboxDispatcher>();
             services.AddTransient<IOutboxReadRepository, DefaultOutboxReadRepository>();
+            services.AddTransient<IIdGeneratorRepository, DefaultIdGeneratorRepository>();
 
             if (config != null)
             {

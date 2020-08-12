@@ -12,7 +12,6 @@ namespace Swisschain.Extensions.Idempotency
             _defaultOutboxDispatcher = defaultOutboxDispatcher;
         }
 
-        public IIdGeneratorRepository IdGeneratorRepository { get; private set; }
         public IOutboxWriteRepository OutboxWriteRepository { get; private set; }
         public string IdempotencyId { get; private set; }
         public bool IsCommitted { get; private set; }
@@ -29,7 +28,6 @@ namespace Swisschain.Extensions.Idempotency
             Outbox outbox)
         {
             OutboxWriteRepository = outboxWriteRepository;
-            IdGeneratorRepository = idGeneratorRepository;
             IdempotencyId = idempotencyId;
             Outbox = outbox;
 
@@ -71,16 +69,6 @@ namespace Swisschain.Extensions.Idempotency
             await RollbackImpl();
 
             IsRolledBack = true;
-        }
-
-        public Task<long> GenerateId(string generatorName)
-        {
-            return IdGeneratorRepository.GetId(IdempotencyId, generatorName);
-        }
-
-        public Task<long> GenerateId(string idempotencyId, string generatorName)
-        {
-            return IdGeneratorRepository.GetId(idempotencyId, generatorName);
         }
 
         public Task EnsureOutboxDispatched()

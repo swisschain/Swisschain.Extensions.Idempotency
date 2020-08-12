@@ -3,7 +3,7 @@
 namespace Swisschain.Extensions.Idempotency
 {
     /// <summary>
-    /// Should work in the context of the <see cref="IUnitOfWork"/> transaction
+    /// Should work not in the context of the <see cref="IUnitOfWork"/> transaction
     /// </summary>
     public interface IIdGeneratorRepository
     {
