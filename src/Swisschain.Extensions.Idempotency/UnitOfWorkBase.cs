@@ -5,12 +5,7 @@ namespace Swisschain.Extensions.Idempotency
 {
     public abstract class UnitOfWorkBase : IUnitOfWork
     {
-        private readonly IOutboxDispatcher _defaultOutboxDispatcher;
-
-        public UnitOfWorkBase(IOutboxDispatcher defaultOutboxDispatcher)
-        {
-            _defaultOutboxDispatcher = defaultOutboxDispatcher;
-        }
+        private IOutboxDispatcher _defaultOutboxDispatcher;
 
         public IOutboxWriteRepository OutboxWriteRepository { get; private set; }
         public bool IsCommitted { get; private set; }
@@ -21,9 +16,12 @@ namespace Swisschain.Extensions.Idempotency
         protected abstract Task RollbackImpl();
         protected abstract ValueTask DisposeAsync(bool disposing);
 
-        public Task Init(IOutboxWriteRepository outboxWriteRepository,
+        public Task Init(IOutboxDispatcher defaultOutboxDispatcher,
+            IOutboxWriteRepository outboxWriteRepository,
             Outbox outbox)
         {
+            _defaultOutboxDispatcher = defaultOutboxDispatcher;
+
             OutboxWriteRepository = outboxWriteRepository;
             Outbox = outbox;
 

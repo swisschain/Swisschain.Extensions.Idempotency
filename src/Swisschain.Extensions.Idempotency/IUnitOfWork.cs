@@ -10,7 +10,9 @@ namespace Swisschain.Extensions.Idempotency
         bool IsRolledBack { get; }
         Outbox Outbox { get; }
 
-        Task Init(IOutboxWriteRepository outboxWriteRepository, Outbox outbox);
+        Task Init(IOutboxDispatcher defaultOutboxDispatcher,
+            IOutboxWriteRepository outboxWriteRepository, 
+            Outbox outbox);
 
         /// <summary>
         /// Closes the <see cref="Outbox"/> and commits unit of work transaction

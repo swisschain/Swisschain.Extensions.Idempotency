@@ -5,11 +5,6 @@ namespace Tests
 {
     public class ExampleUnitOfWork : UnitOfWorkBase
     {
-        public ExampleUnitOfWork(IOutboxDispatcher defaultOutboxDispatcher) :
-            base(defaultOutboxDispatcher)
-        {
-        }
-
         protected override Task CommitImpl()
         {
             throw new System.NotImplementedException();
