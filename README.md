@@ -42,7 +42,7 @@ For example, if you want to use MassTransit dispatching and EF Core persistance,
 services.AddIdempotency<UnitOfWork>(x =>
 {
     x.DispatchWithMassTransit();
-    x.PersistWithEfCore(s => Fixture.CreateDbContext());
+    x.PersistWithEfCore(s => s.GetRequiredService<DatabaseContext>());
 });
 
 ```
