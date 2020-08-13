@@ -54,10 +54,10 @@ Whenever you need to make your method idempotent, follow this pattern:
 ```c#
 public class TransfersService
 {
-    IOutboxManager _unitOfWorkManager;
+    IOutboxManager IUnitOfWorkManager<UnitOfWork>;
     IIdGenerator _idGenerator;
 
-    // Inject `IOutboxManager` to the service:
+    // Inject `IUnitOfWorkManager<TUnitOfWork>` and `IIdGenerator` to the service:
     public TransfersService(IUnitOfWorkManager<UnitOfWork> unitOfWorkManager, IIdGenerator idGenerator)
     {
         _unitOfWorkManager = unitOfWorkManager;
@@ -104,12 +104,12 @@ public class TransfersService
             
             // In the end of this block, commit the unit of work.
             // You can Rollback it too if you logic requires this. This will rollback all the changes within the outbox.
-            // If you missed both Rollback and Commit, the unit of work will be rolled back on disposing.
+            // If you missed both `Rollback` and `Commit`, the unit of work will be rolled back on disposing.
             await unitOfWork.Commit();
         }
         
         // Dispatch all the messages stored in the outbox (you can omit this, if your method doesn't produce messages):
-        // If you use unit of work inside Mass Transit message handler, use overload which accepts ConsumeContext to improve
+        // If you use unit of work inside Mass Transit message handler, use overload which accepts `ConsumeContext` to improve
         // messages traceability
         await unitOfWork.EnsureOutboxDispatched();
         
