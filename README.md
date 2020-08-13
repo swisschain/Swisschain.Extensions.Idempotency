@@ -54,7 +54,7 @@ Whenever you need to make your method idempotent, follow this pattern:
 ```c#
 public class TransfersService
 {
-    IOutboxManager IUnitOfWorkManager<UnitOfWork>;
+    IUnitOfWorkManager<UnitOfWork> _unitOfWorkManager;
     IIdGenerator _idGenerator;
 
     // Inject `IUnitOfWorkManager<TUnitOfWork>` and `IIdGenerator` to the service:
