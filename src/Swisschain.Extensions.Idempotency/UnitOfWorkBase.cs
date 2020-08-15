@@ -23,7 +23,7 @@ namespace Swisschain.Extensions.Idempotency
             private set => _outboxWriteRepository = value;
         }
 
-        public bool IsTransactional => Outbox != null;
+        public bool IsTransactional => _outbox != null;
         public bool IsCommitted { get; private set; }
         public bool IsRolledBack { get; private set; }
 

@@ -19,6 +19,7 @@ namespace Swisschain.Extensions.Idempotency
 
         /// <summary>
         /// Initializes transactional unit of work
+        /// Used internally by Swisschain.Idempotency infrastructure
         /// </summary>
         Task Init(IOutboxDispatcher defaultOutboxDispatcher,
             IOutboxWriteRepository outboxWriteRepository, 
