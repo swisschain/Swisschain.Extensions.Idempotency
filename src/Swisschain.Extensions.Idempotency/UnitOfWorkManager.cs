@@ -21,5 +21,12 @@ namespace Swisschain.Extensions.Idempotency
 
             return unitOfWork;
         }
+
+        public async Task<TUnitOfWork> Begin()
+        {
+            var unitOfWork = await _unitOfWorkFactory.Create();
+
+            return unitOfWork;
+        }
     }
 }

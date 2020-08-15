@@ -6,11 +6,40 @@ namespace Swisschain.Extensions.Idempotency
     public abstract class UnitOfWorkBase : IUnitOfWork
     {
         private IOutboxDispatcher _defaultOutboxDispatcher;
+        private Outbox _outbox;
+        private IOutboxWriteRepository _outboxWriteRepository;
 
-        public IOutboxWriteRepository OutboxWriteRepository { get; private set; }
+        public IOutboxWriteRepository OutboxWriteRepository
+        {
+            get
+            {
+                if (!IsTransactional)
+                {
+                    throw new InvalidOperationException("Outbox repository of the non-transactional unit of work can't be accessed");
+                }
+
+                return _outboxWriteRepository;
+            }
+            private set => _outboxWriteRepository = value;
+        }
+
+        public bool IsTransactional => Outbox != null;
         public bool IsCommitted { get; private set; }
         public bool IsRolledBack { get; private set; }
-        public Outbox Outbox { get; private set; }
+
+        public Outbox Outbox
+        {
+            get
+            {
+                if (!IsTransactional)
+                {
+                    throw new InvalidOperationException("Outbox of the non-transactional unit of work can't be accessed");
+                }
+
+                return _outbox;
+            }
+            private set => _outbox = value;
+        }
 
         protected abstract Task CommitImpl();
         protected abstract Task RollbackImpl();
@@ -30,6 +59,11 @@ namespace Swisschain.Extensions.Idempotency
 
         public async Task Commit()
         {
+            if (!IsTransactional)
+            {
+                throw new InvalidOperationException("Non-transactional unit of work can't be committed");
+            }
+
             if (IsCommitted)
             {
                 throw new InvalidOperationException("The unit of work was commit already");
@@ -50,6 +84,11 @@ namespace Swisschain.Extensions.Idempotency
 
         public async Task Rollback()
         {
+            if (!IsTransactional)
+            {
+                throw new InvalidOperationException("Non-transactional unit of work can't be rolled back");
+            }
+
             if (IsCommitted)
             {
                 throw new InvalidOperationException("The unit of work was commit already");
@@ -72,13 +111,18 @@ namespace Swisschain.Extensions.Idempotency
 
         public async Task EnsureOutboxDispatched(IOutboxDispatcher dispatcher)
         {
+            if (!IsTransactional)
+            {
+                throw new InvalidOperationException("Outbox of the non-transactional unit of work can't be dispatched");
+            }
+
             await Outbox.EnsureDispatched(dispatcher);
             await OutboxWriteRepository.Update(Outbox);
         }
 
         public async ValueTask DisposeAsync()
         {
-            if (!(IsCommitted || IsRolledBack))
+            if (IsTransactional && !(IsCommitted || IsRolledBack))
             {
                 await Rollback();
             }
