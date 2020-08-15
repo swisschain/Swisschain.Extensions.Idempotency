@@ -18,6 +18,7 @@ Additional packages are required to use the Outbox dispatching, Outbox persistan
 ## Basics
 
 - Unit of work allows you to change several objects atomically. Under the hood it starts and commits/rollbacks a transaction. This means, that underlying persistence provider should support transactions.
+- It is also possible to create non-transactional unit of work to allow usage of the same repositories outside of a transaction. You can use paramerless `IUnitOfWorkManager<TUnitOfWork>.Begin()` method to create a non-transactional unit of work.
 - Outbox allows you to "remember" all the outputs of the particular request and produce the same outputs whenever the request is duplicated or retried. Besides it avoids extra output message publication in the case if the messages were already sent for sure.
 - Unit of work and outbox together allows you to make outcome (data update, output messages and response) of your method idempotent.
 - ID generator allows you to get the same ID for the request using specified ID sequence despite of how many times it's called.
